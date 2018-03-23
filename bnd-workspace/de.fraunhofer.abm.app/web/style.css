@@ -26,6 +26,12 @@ body {
    .rwd-break { display: none; }
 }
 
+
+.version-name{
+	margin: 0 auto;
+	width:200px;
+}
+
 .title-header{
 	position:fixed;
 	left: 20px;
@@ -118,6 +124,18 @@ body {
   height: 55px;
   margin-bottom: 4px;
 }
+/* search bar for hermes modal */
+.search-bar{
+	width: 99%;
+	padding: 2px;
+	margin:6px
+}
+/* manages the div for the hermes modal search bar */
+.div-search-bar{
+	margin: 0 auto;
+	width:80%;
+	padding:5px;
+}
 
 /* Marks important text */
 .highlight {
@@ -128,9 +146,20 @@ body {
 
 /* Formats the checkboxes for selecting Hermes filters */
 .filterBox {
-	width: 48%;
+	width: 30%;
 	padding: 3px 1%;
-	display: inline-block;
+	padding-left: 10px;
+	padding-right: 10px;
+	display: table;
+	overflow: scroll;
+	font-size:small;
+}
+
+.filterList{
+	max-height:40vh;
+	overflow:scroll;
+	border: 2px solid lightgrey;
+	border-radius: 25px;
 }
 
 /* Custom page footer */

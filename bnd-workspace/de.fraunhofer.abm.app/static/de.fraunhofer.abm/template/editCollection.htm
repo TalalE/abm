@@ -72,8 +72,13 @@
 	<div>Latest Version Built: ???</div>
 	<div ng-show="cc.collection.privateStatus">Privacy: Private</div>
 	<div ng-hide="cc.collection.privateStatus">Privacy: Public</div>
-	<div>
-	<div style="padding-top: 5%">
+	<div  align="center">
+	<div class="btn-group-vertical" style="padding-top: 5%">
+
+		<button ng-disabled="loading || cc.saving" title="New Version" ng-click="cc.runFilter(cc.version)"
+			class="btn btn-primary btn-sm" style="margin-bottom: 5px;">New Version</button>
+
+
 		<button ng-disabled="loading || cc.saving || cc.running || !cc.collection.privateStatus" title="Make Public"
 			class="btn btn-primary btn-sm" style="margin-bottom: 5px;"
 			confirm="Are you sure you want to make this version public?" ng-click="cc.makePublic(cc.collection)">Make Public</button>
