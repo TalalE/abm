@@ -22,7 +22,7 @@
 	</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-info" type="button" ng-click="cc.build()">Create Version</button>
+		<button class="btn btn-info" type="button" ng-click="cc.build(); $ctrl.cancel()">Create Version</button>
 		<button class="btn btn-warning float-left" type="button" ng-click="$ctrl.cancel()">Cancel</button>
 	</div>
 	<div class="wrapper" ng-show="$ctrl.loading">
