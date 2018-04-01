@@ -1,4 +1,4 @@
-<div style="max-height: 95vh; overflow: scroll;">
+<div ng-controller="collectionController as cc" style="max-height: 95vh; overflow: scroll;">
 	<div class="modal-header" style="padding-bottom: 5px;">
 	    <h3 class="modal-title" id="modal-title">Search Filters for Build</h3>
 	</div>
@@ -12,12 +12,17 @@
 		<input class ="search-bar" type="text" placeholder="Search..."/>
 		<div class="filterList">
 		<div ng-repeat="filter in filterList" class="filterBox">
-			<label for={{filter.filtername}}> {{filter.filtername | hermesName}}</label><br/>
+			<label ng-click="$ctrl.addFilter(filter)" class="filterLabel" for={{filter.filtername}}> +{{filter.filtername | hermesName}}</label><br/>
 		</div>
+	</div>
+	<div class="selected-filters">
+	<div class="filterSelect" ng-repeat="filter in selectedFilters">
+		<label class="selectedLabel" for={{filter.filtername}}> {{filter.filtername | hermesName}}</label><br/>
+	</div>
 	</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-info" type="button" ng-click="$ctrl.run()">Create Version</button>
+		<button class="btn btn-info" type="button" ng-click="cc.build()">Create Version</button>
 		<button class="btn btn-warning float-left" type="button" ng-click="$ctrl.cancel()">Cancel</button>
 	</div>
 	<div class="wrapper" ng-show="$ctrl.loading">

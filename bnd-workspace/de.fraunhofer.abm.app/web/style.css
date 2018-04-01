@@ -161,6 +161,27 @@ body {
 	border: 2px solid lightgrey;
 	border-radius: 25px;
 }
+/*shows that the filters are clickable */
+.filterLabel{
+	cursor:pointer;
+}
+
+.filterSelect{
+	margin-top: 2px;
+}
+
+.selectedLabel{
+	margin: 4px;
+}
+
+.selected-filters{
+	height: 25vh;
+	border: 2px solid lightgrey;
+	border-radius: 25px;
+	overflow:scroll;
+	margin-top: 10px;
+	
+}
 
 /* Custom page footer */
 .footer {

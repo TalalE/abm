@@ -357,9 +357,13 @@ function collectionController($rootScope, $scope, $http, $location, $route, $rou
 		});
 	}
 
+<<<<<<< HEAD
 	self.redirectToAddProject = function() {
 		$location.path('/search');
 	}
+=======
+	
+>>>>>>> updated modal
 	self.build = function() {
 		$http.post('/rest/build', self.version, null).then(
 				function(d) {
