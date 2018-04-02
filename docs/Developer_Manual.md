@@ -13,6 +13,7 @@
 * [Running Hermes manually](#running-hermes-manually)
 * [Updating the database](#updating-the-database)
 * [Changing email notification settings](#changing-email-notification-settings)
+* [Continuous integration using jenkins](#continuous-integration-using-jenkins)
 
 # Install ABM
 
@@ -97,8 +98,15 @@ The installation of ABM is not recommended on Windows. We advise Windows users t
   $ cd ${DIRECTORY}/abm/docker_files/abm-maven-3-jdk-7
   $ docker build -t abm/maven:3-jdk-7 .
   ```
+* Create the gradle build Image:
+  `$ docker pull gradle`
+* Create the ant build image:
+  ```
+  $ cd ${DIRECTORY}/abm/docker_file/abm-ant-1.10.1-jdk-8
+  $ docker build -t abm/ant:1.10.1-jdk-8 .
+  ```
 * Pull the Hermes image: `$ docker pull opalj/sbt_scala_javafx`
-* Verify that the three images are running. You should see abm/sbt, abm/maven, and opalj/sbt_scala_javafx when running `$ docker images`
+* Verify that the three images are running. You should see abm/ant, gradle, abm/sbt, abm/maven, and opalj/sbt_scala_javafx when running `$ docker images`
 
 ### Set up the database
 * Install MySQL Community Server >= 5.5
@@ -147,7 +155,7 @@ The installation of ABM is not recommended on Windows. We advise Windows users t
   * Uncheck "Copy projects into workspace"
 * Wait for the workspace to finish building. If compilation errors appear in the code (except for the test project), they should be solved before continuing.
 * Open the file abm/bnd-workspace/de.fraunhofer.abm.collection.dao.jpa/configuration/configuration.json and modify the database configurations: replace the user and password by the mysql user and password that you have created when [installing the database](#set-up-the-database). If you haven't created a user, you can use "root" as the user and the root password as the configuration password.
-* Open the file abm/bnd-workspace/de.fraunhofer.abm.app/de.fraunhofer.abm.bndrun and modify the felix.webconsole.username and the felix.webconsole.password
+* Open or create the file cnf/build.bnd and modify the felix.webconsole.username and the felix.webconsole.password
 * Generate the rest of the database:
   * Open the file persistence.xml in de.fraunhofer.abm.collection.dao.jpa
   * Uncomment <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" /> (this line enables the database generation from the JPA entities. this has to be done only when the JPA entities change or for the setup)
@@ -189,7 +197,7 @@ All users are managed by the OSGi UserAdmin service, which can be accessed throu
 
 # Configuration information
 
-* The file config.bnd in de.fraunhofer.abm.app contains the application configuration information: webconsole credentials and settings, admin email information, Google token and GitHub token. Replace the values of the configuration information with your own.
+* The file build.bnd in cnf contains the application configuration information: webconsole credentials and settings, admin email information, Google token and GitHub token. Replace the values of the configuration information with your own.
 * The file Configuration.java in de.fraunhofer.abm.suitebuilder contains "Workspace Root" which you can adjust to fit your development machine. Make sure that your ${USER} has read, write, and execute accesses to this directory and its sub-directories: `$ sudo chown -R ${USER} ${WORKSPACE_ROOT}`
 * The file Configuration.java in de.fraunhofer.abm.repoarchive.local contains "Directory" which you can adjust to fit your development machine. Make sure that your ${USER} has read, write, and execute accesses to this directory and its sub-directories: `$ sudo chown -R ${USER} ${WORKSPACE_DIRECTORY}`
 * The file HermesConfiguration.java in de.fraunhofer.abm.hermes.impl contains "hermesConfigDir()". By default, you can set it to ${DIRECTORY}/abm/hermes_config. Else, you can adust to fit your development machine. Make sure that your ${USER} has read, write, and execute accesses to this directory and its sub-directories: `$ sudo chown -R ${USER} ${HERMES_CONFIG_DIR}` Make sure to keep the Hermes configuration files in this directory (docker.sh, queryfeaturemap.json, application.conf, and hermes.json). You can find the files in hermes_config in this repository.
@@ -262,3 +270,23 @@ To avoid this, make the following changes to your local database for each of the
 
 # Changing email notification settings
 All the settings that control the email notification system are at the top of the file EmailConfiguration.java in the package de.fraunhofer.abm.app. You can change these to control the host the program connects to, the email and credentals it uses, and who it notifies when a new account is registered.
+
+# Continuous integration using jenkins
+
+Abm uses Jenkins for deployment. Every day the code from master will deployed into the server.
+Let's see how deployment is done.
+
+* There is seperate github account for abm deployment.
+* Jenkins dashboard:
+![Jenkins Dashboard](Jenkins.png)
+* Build is done daily at midnight.
+* Using Systemd ABM jar file has been created as a service.
+* From the server, ABM can be started and stopped using 
+
+```
+systemctl start abm
+systemctl stop abm
+```
+* Before deployment `abm service` will be stopped and after the creation of new jar file abm service will be started.
+
+* In case, immediately build can be done using Build Now option in jenkins.
