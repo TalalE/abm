@@ -1,14 +1,28 @@
-<div>
-	<div class="modal-header">
-	    <h3 class="modal-title" id="modal-title">Select Filters to Run</h3>
+<div ng-controller="collectionController as cc" style="max-height: 95vh; overflow: scroll;">
+	<div class="modal-header" style="padding-bottom: 5px;">
+	    <h3 class="modal-title" id="modal-title">Search Filters for Build</h3>
 	</div>
 	<div class="modal-body" id="modal-body">
+		<div class="version-name">
+			<div>Version Name: <button id="single-button" type="button" class="btn btn-success btn-xs" uib-dropdown-toggle ng-disabled="cc.disabled || cc.saving">
+       		Version {{cc.version.number}} &nbsp;&nbsp;&dash;&nbsp;&nbsp;  {{cc.version.creationDate | date:'short'}}&nbsp;&nbsp;
+   		</button>
+   		</div>
+		</div>
+		<input class ="search-bar" type="text" placeholder="Search..."/>
+		<div class="filterList">
 		<div ng-repeat="filter in filterList" class="filterBox">
-			<input type="checkbox" id={{filter.filtername}} ng-model="filter.activate"/><label for={{filter.filtername}}> {{filter.filtername | hermesName}}</label> <input type="text"  ng-model="filter.threshold" style="width:50px;"/> <br/>
+			<label ng-click="$ctrl.addFilter(filter)" class="filterLabel" for={{filter.filtername}}> +{{filter.filtername | hermesName}}</label><br/>
 		</div>
 	</div>
+	<div class="selected-filters">
+	<div class="filterSelect" ng-repeat="filter in selectedFilters">
+		<label class="selectedLabel" for={{filter.filtername}}> {{filter.filtername | hermesName}}</label><br/>
+	</div>
+	</div>
+	</div>
 	<div class="modal-footer">
-		<button class="btn btn-info" type="button" ng-click="$ctrl.run()">Run Selected Filters</button>
+		<button class="btn btn-info" type="button" ng-click="cc.build(); $ctrl.cancel()">Create Version</button>
 		<button class="btn btn-warning float-left" type="button" ng-click="$ctrl.cancel()">Cancel</button>
 	</div>
 	<div class="wrapper" ng-show="$ctrl.loading">

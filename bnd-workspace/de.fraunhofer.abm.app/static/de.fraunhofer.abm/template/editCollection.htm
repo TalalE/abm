@@ -25,7 +25,7 @@
 			</div>
 				<div class="form-actions pull-left" style="padding-top: 5%">
 					<button ng-disabled="loading || cc.saving" title="New Version"
-						class="btn btn-primary btn-sm" ng-click="cc.deriveVersion()">New Version</button>
+						class="btn btn-primary btn-sm" ng-click="cc.runFilter(cc.version)">New Version</button>
 
 					<button ng-disabled="loading || cc.saving || cc.running || form.name.$error.required" title="Save Changes"
 						class="btn btn-primary btn-sm" ng-click="cc.updateCollectionInformation()">Save

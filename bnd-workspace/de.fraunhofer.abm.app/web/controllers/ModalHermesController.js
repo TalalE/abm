@@ -5,6 +5,7 @@ angular.module('de.fraunhofer.abm').controller('modalHermesController', function
 	$ctrl.collection = modalHermesService.collection;
 	$scope.loading = false;
 	$scope.filterList = [];
+	$scope.selectedFilters = [];
 	
 	
 	$ctrl.loadFilters = function() {
@@ -45,7 +46,12 @@ angular.module('de.fraunhofer.abm').controller('modalHermesController', function
 				$ctrl.poller();
 		});
 	}
-
+	
+	$ctrl.addFilter = function(d){
+		$scope.selectedFilters.push(d);
+	}
+	
+	
 	$ctrl.cancel = function() {
 	    
 		$uibModalInstance.close();
